@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_asisten_keuangan/view/saldo.dart';
-import 'package:mobile_asisten_keuangan/view/pengeluaran_harian.dart';
+//import 'package:mobile_asisten_keuangan/view/pengeluaran_harian.dart';
 
 void main() => runApp(const AsistenKeuangan());
 
@@ -112,7 +112,7 @@ class _MainLayoutState extends State<MainLayout> {
   int selectedMenuIndex = 0;
 
   final List<Widget> menus = [
-    PengeluaranHarianView(),
+    //PengeluaranHarianView(),
     SaldoView(),
   ];
 
@@ -146,12 +146,12 @@ class _MainLayoutState extends State<MainLayout> {
                 ),
               ),
             ),
-            ListTile(
+            /*ListTile(
               leading: const Icon(Icons.today),
               title: const Text('Hari Ini'),
               selected: selectedMenuIndex == 0,
               onTap: () => _onSelectMenu(0),
-            ),
+            ),*/
             ListTile(
               leading: const Icon(Icons.account_balance_wallet),
               title: const Text('Saldo'),

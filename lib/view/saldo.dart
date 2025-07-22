@@ -8,9 +8,9 @@ class SaldoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: const [
-        FormSaldoComponent(title: 'Total Saldo'),
+        FormSaldoComponent(title: 'Total Saldo', nama: 'total'),
         SizedBox(height: 32),
-        FormSaldoComponent(title: 'Saldo Harian'),
+        FormSaldoComponent(title: 'Saldo Harian', nama: 'harian'),
       ],
     );
   }

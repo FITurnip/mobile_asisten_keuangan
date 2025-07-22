@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_asisten_keuangan/view/components/saldo.dart'; // Import SaldoComponent yang sudah kamu buat
 import 'package:mobile_asisten_keuangan/presenter/saldo.dart';
+import 'package:mobile_asisten_keuangan/data/database.dart';
+import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 
 class FormSaldoComponent extends StatefulWidget {
   final String title;
-  const FormSaldoComponent({super.key, required this.title});
+  final String nama;
+  const FormSaldoComponent({super.key, required this.title, required this.nama});
 
   @override
   State<FormSaldoComponent> createState() => _FormSaldoComponentState();
@@ -18,7 +21,11 @@ class _FormSaldoComponentState extends State<FormSaldoComponent>
   @override
   void initState() {
     super.initState();
-    _presenter = SaldoPresenter(this);
+    AppDatabase.getDatabase().then((db) {
+      final dao = SaldoDao(db);         // ← DAO dibuat di sini
+      _presenter = SaldoPresenter(this, dao); // ← Diberikan ke presenter
+      _presenter.init();
+    });
   }
 
   @override
@@ -66,6 +73,9 @@ class _FormSaldoComponentState extends State<FormSaldoComponent>
       SnackBar(content: Text(pesan)),
     );
   }
+
+  @override
+  String getNamaSaldo() => widget.nama;
 
   @override
   Widget build(BuildContext context) {

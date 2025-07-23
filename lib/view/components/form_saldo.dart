@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_asisten_keuangan/view/components/saldo.dart'; // Import SaldoComponent yang sudah kamu buat
 import 'package:mobile_asisten_keuangan/presenter/saldo.dart';
 import 'package:mobile_asisten_keuangan/data/database.dart';
-import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 
 class FormSaldoComponent extends StatefulWidget {
   final String title;
@@ -22,8 +21,7 @@ class _FormSaldoComponentState extends State<FormSaldoComponent>
   void initState() {
     super.initState();
     AppDatabase.getDatabase().then((db) {
-      final dao = SaldoDao();
-      _presenter = SaldoPresenter(this, dao);
+      _presenter = SaldoPresenter(this);
       _presenter.init();
     });
   }

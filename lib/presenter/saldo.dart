@@ -1,6 +1,8 @@
 import 'package:mobile_asisten_keuangan/data/database.dart';
 import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 import 'package:mobile_asisten_keuangan/model/saldo.dart';
+import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
+import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
 
 abstract class SaldoViewContract {
   void updateSaldo(int saldo);
@@ -11,27 +13,34 @@ abstract class SaldoViewContract {
 }
 
 class SaldoPresenter {
-  final SaldoDao dao;
+  late SaldoDao saldoDao;
   SaldoModel? _model;
   final SaldoViewContract _view;
 
+  late PengeluaranDao pengeluaranDao;
   late String nama;
 
-  SaldoPresenter(this._view, this.dao);
+  late DateTime curDatetime;
+
+  SaldoPresenter(this._view);
 
   Future<void> init() async {
     nama = _view.getNamaSaldo();
 
     // Coba ambil dari DB
-    _model = await dao.getSaldoByNama(nama);
+    saldoDao = SaldoDao();
+    _model = await saldoDao.getSaldoByNama(nama);
 
     // Kalau belum ada, buat baru
     if (_model == null) {
       _model = SaldoModel(nama: nama, saldo: 0);
-      _model!.id = await dao.insertSaldo(_model!);
+      _model!.id = await saldoDao.insertSaldo(_model!);
     }
 
-    if(nama == "harian") {}
+    if(nama == "harian") {
+      pengeluaranDao = PengeluaranDao();
+      curDatetime = DateTime.now();
+    }
     _view.updateSaldo(_model!.saldo);
   }
 
@@ -42,8 +51,11 @@ class SaldoPresenter {
       return;
     }
     _model!.tambah(input);
-    await dao.updateSaldo(_model!);
+    await saldoDao.updateSaldo(_model!);
+
     _view.updateSaldo(_model!.saldo);
+
+    if(nama == "harian") pengeluaranDao.tambahSaldoSemua(curDatetime, input.toDouble());
   }
 
   Future<void> kurangiSaldo() async {
@@ -57,8 +69,10 @@ class SaldoPresenter {
       return;
     }
     _model!.kurangi(input);
-    await dao.updateSaldo(_model!);
+    await saldoDao.updateSaldo(_model!);
     _view.updateSaldo(_model!.saldo);
+
+    if(nama == "harian") pengeluaranDao.kurangiSaldoSemua(curDatetime, input.toDouble());
   }
 }
 

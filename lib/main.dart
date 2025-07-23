@@ -184,7 +184,7 @@ class _MainLayoutState extends State<MainLayout> {
             ),
             ListTile(
               leading: const Icon(Icons.today),
-              title: const Text('Hari Ini'),
+              title: const Text('Pengeluaran'),
               selected: selectedMenuIndex == 0,
               onTap: () => _onSelectMenu(0),
             ),

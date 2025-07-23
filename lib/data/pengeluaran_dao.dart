@@ -15,6 +15,7 @@ class PengeluaranDao {
       orderBy: 'timestamp DESC',
     );
 
+    print(result);
     return result.map((map) => PengeluaranModel.fromMap(map)).toList();
   }
 
@@ -42,6 +43,41 @@ class PengeluaranDao {
     }
 
     await batch.commit(noResult: true);
+  }
+
+  String formatTanggal(DateTime dt) {
+    return "${dt.year.toString().padLeft(4, '0')}"
+          "-${dt.month.toString().padLeft(2, '0')}"
+          "-${dt.day.toString().padLeft(2, '0')}";
+  }
+
+  Future<void> tambahSaldoSemua(DateTime tanggal, double jumlah) async {
+    final keyTanggal = formatTanggal(tanggal);
+    print(keyTanggal);
+
+    final db = await AppDatabase.getDatabase();
+    await db.rawUpdate(
+      '''
+      UPDATE pengeluaran
+      SET saldo_sblm = saldo_sblm + ?
+      WHERE timestamp LIKE ?
+      ''',
+      [jumlah, '$keyTanggal%'],
+    );
+  }
+
+  Future<void> kurangiSaldoSemua(DateTime tanggal, double jumlah) async {
+    final keyTanggal = formatTanggal(tanggal);
+    
+    final db = await AppDatabase.getDatabase();
+    await db.rawUpdate(
+      '''
+      UPDATE pengeluaran
+      SET saldo_sblm = saldo_sblm - ?
+      WHERE timestamp LIKE ?
+      ''',
+      [jumlah, '$keyTanggal%'],
+    );
   }
 
   Future<List<PengeluaranModel>> getMingguan() async {

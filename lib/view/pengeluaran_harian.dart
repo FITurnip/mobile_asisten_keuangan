@@ -177,7 +177,7 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView>
               ),
             ),
             Flexible(
-              child: ListView.separated(
+              child: presenter.pengeluaranList.length > 0 ? ListView.separated(
                 itemCount: presenter.pengeluaranList.length,
                 separatorBuilder: (context, index) => const Divider(height: 0.5),
                 itemBuilder: (context, index) {
@@ -200,6 +200,17 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView>
                     ),
                   );
                 },
+              ) : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 24),
+                  Icon(Icons.inbox, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Belum ada pengeluaran',
+                  )
+                ]
               ),
             ),
           ],

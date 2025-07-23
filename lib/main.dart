@@ -2,8 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:mobile_asisten_keuangan/view/saldo.dart';
 import 'package:mobile_asisten_keuangan/view/pengeluaran_harian.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _resetSaldoHarianJikaPerlu();
+  runApp(const AsistenKeuangan());
+}
 
-void main() => runApp(const AsistenKeuangan());
+Future<void> _resetSaldoHarianJikaPerlu() async {
+  final prefs = await SharedPreferences.getInstance();
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+
+  final lastResetStr = prefs.getString('last_reset_date');
+  if (lastResetStr != null) {
+    final lastReset = DateTime.parse(lastResetStr);
+    final lastResetDate = DateTime(lastReset.year, lastReset.month, lastReset.day);
+
+    if (today.isAfter(lastResetDate)) {
+      await _resetSaldoHarian();
+      await prefs.setString('last_reset_date', now.toIso8601String());
+    }
+  } else {
+    await _resetSaldoHarian();
+    await prefs.setString('last_reset_date', now.toIso8601String());
+  }
+}
+
+Future<void> _resetSaldoHarian() async {
+  final saldoDao = await SaldoDao();
+  final _saldoHarian = await saldoDao.getSaldoByNama('harian');
+  final _saldoDefault = await saldoDao.getSaldoByNama('harian_default');
+  _saldoHarian!.updateJumlah(_saldoDefault!.saldo);
+
+  await saldoDao.updateSaldo(_saldoHarian!);
+}
 
 class ThemeController extends ValueNotifier<ThemeMode> {
   ThemeController() : super(ThemeMode.system);

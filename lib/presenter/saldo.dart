@@ -15,10 +15,12 @@ class SaldoPresenter {
   SaldoModel? _model;
   final SaldoViewContract _view;
 
+  late String nama;
+
   SaldoPresenter(this._view, this.dao);
 
   Future<void> init() async {
-    final nama = _view.getNamaSaldo();
+    nama = _view.getNamaSaldo();
 
     // Coba ambil dari DB
     _model = await dao.getSaldoByNama(nama);
@@ -29,6 +31,7 @@ class SaldoPresenter {
       _model!.id = await dao.insertSaldo(_model!);
     }
 
+    if(nama == "harian") {}
     _view.updateSaldo(_model!.saldo);
   }
 

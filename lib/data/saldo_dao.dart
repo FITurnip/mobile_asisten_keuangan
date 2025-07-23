@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../model/saldo.dart';
+import 'package:mobile_asisten_keuangan/model/saldo.dart';
 import 'package:mobile_asisten_keuangan/data/database.dart';
 
 class SaldoDao {

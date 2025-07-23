@@ -70,7 +70,7 @@ class PengeluaranPresenter {
     _saldoModel!.tambah(data.pengeluaran);
     await saldoDao.updateSaldo(_saldoModel!);
 
-    // Rehitung saldo_sebelumnya untuk data yang tersisa
+    // hitung ulang saldo_sebelumnya untuk data yang tersisa
     int saldoTemp = _saldoModel!.saldo;
     for (var item in pengeluaranList) {
       item.saldoSebelumnya = saldoTemp;

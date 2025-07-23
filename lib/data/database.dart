@@ -44,6 +44,7 @@ class AppDatabase {
 
     // Data awal
     await db.insert('saldo', {'nama': 'total', 'saldo': 10000000});
+    await db.insert('saldo', {'nama': 'harian_default', 'saldo': 100000});
     await db.insert('saldo', {'nama': 'harian', 'saldo': 100000});
   }
 

@@ -15,6 +15,12 @@ class SaldoModel {
     }
   }
 
+  void updateJumlah(int jumlah) {
+    if(jumlah >= 0) {
+      saldo = jumlah;
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

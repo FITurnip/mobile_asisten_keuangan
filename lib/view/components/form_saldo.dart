@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/view/components/saldo.dart'; // Import SaldoComponent yang sudah kamu buat
-import 'package:mobile_asisten_keuangan/presenter/saldo.dart';
-import 'package:mobile_asisten_keuangan/data/database.dart';
+import 'package:keuangan_pribadi/view/components/saldo.dart'; // Import SaldoComponent yang sudah kamu buat
+import 'package:keuangan_pribadi/presenter/saldo.dart';
+import 'package:keuangan_pribadi/data/database.dart';
 
 class FormSaldoComponent extends StatefulWidget {
   final String title;

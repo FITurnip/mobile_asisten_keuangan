@@ -1,4 +1,4 @@
-package com.example.keuangan_pribadi
+package com.keuangan_pribadi
 
 import io.flutter.embedding.android.FlutterActivity
 

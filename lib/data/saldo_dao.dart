@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:mobile_asisten_keuangan/model/saldo.dart';
-import 'package:mobile_asisten_keuangan/data/database.dart';
+import 'package:keuangan_pribadi/model/saldo.dart';
+import 'package:keuangan_pribadi/data/database.dart';
 
 class SaldoDao {
   Future<int> insertSaldo(SaldoModel saldo) async {

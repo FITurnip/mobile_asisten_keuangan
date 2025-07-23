@@ -1,5 +1,5 @@
-name: mobile_asisten_keuangan
-description: "A new Flutter project."
+name: keuangan_pribadi
+description: "Aplikasi Pencatatan Keuangan Pribadi"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -41,6 +41,8 @@ dependencies:
   excel: ^2.0.0
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
+  flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -94,3 +96,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  color: "#2E7D32"
+  image: assets/logo_asisten_keuangan_putih.png
+  android: true
+
+flutter_icons:
+  android: true
+  image_path: "assets/logo_asisten_keuangan_hijau.png"

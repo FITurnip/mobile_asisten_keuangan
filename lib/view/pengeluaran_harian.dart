@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
-import 'package:mobile_asisten_keuangan/presenter/pengeluaran.dart';
-import 'package:mobile_asisten_keuangan/view/components/saldo.dart';
+import 'package:keuangan_pribadi/model/pengeluaran.dart';
+import 'package:keuangan_pribadi/presenter/pengeluaran.dart';
+import 'package:keuangan_pribadi/view/components/saldo.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:mobile_asisten_keuangan/utils/format.dart';
+import 'package:keuangan_pribadi/utils/format.dart';
 
 class PengeluaranHarianView extends StatefulWidget {
   const PengeluaranHarianView({super.key});

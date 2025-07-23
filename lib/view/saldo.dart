@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/view/components/form_saldo.dart';
+import 'package:keuangan_pribadi/view/components/form_saldo.dart';
 
 class SaldoView extends StatelessWidget {
   const SaldoView({super.key});

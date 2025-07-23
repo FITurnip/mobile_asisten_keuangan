@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/view/pengeluaran_harian.dart';
-import 'package:mobile_asisten_keuangan/view/saldo.dart';
-import 'package:mobile_asisten_keuangan/view/overview.dart';
+import 'package:keuangan_pribadi/view/pengeluaran_harian.dart';
+import 'package:keuangan_pribadi/view/saldo.dart';
+import 'package:keuangan_pribadi/view/overview.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
+import 'package:keuangan_pribadi/data/saldo_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -199,7 +199,7 @@ class _MainLayoutState extends State<MainLayout> {
             ListTile(
               leading: const Icon(Icons.dashboard),
               title: const Text('Overview'),
-              selected: selectedMenuIndex == 1,
+              selected: selectedMenuIndex == 2,
               onTap: () => _onSelectMenu(2),
             ),
             const Divider(),

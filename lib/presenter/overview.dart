@@ -1,6 +1,6 @@
-import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
-import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
-import 'package:mobile_asisten_keuangan/utils/file.dart';
+import 'package:keuangan_pribadi/model/pengeluaran.dart';
+import 'package:keuangan_pribadi/data/pengeluaran_dao.dart';
+import 'package:keuangan_pribadi/utils/file.dart';
 
 abstract class OverviewViewContract {
   void updateItemList(List<Map<String, dynamic>> newList);

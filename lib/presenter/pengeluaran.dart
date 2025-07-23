@@ -1,7 +1,7 @@
-import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
-import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
-import 'package:mobile_asisten_keuangan/model/saldo.dart';
-import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
+import 'package:keuangan_pribadi/model/pengeluaran.dart';
+import 'package:keuangan_pribadi/data/pengeluaran_dao.dart';
+import 'package:keuangan_pribadi/model/saldo.dart';
+import 'package:keuangan_pribadi/data/saldo_dao.dart';
 
 abstract class PengeluaranViewContract {
   void refresh();

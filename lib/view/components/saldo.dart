@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/utils/format.dart';
+import 'package:keuangan_pribadi/utils/format.dart';
 
 class SaldoComponent extends StatelessWidget {
   final String judul;

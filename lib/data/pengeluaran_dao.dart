@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:mobile_asisten_keuangan/data/database.dart';
-import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
+import 'package:keuangan_pribadi/data/database.dart';
+import 'package:keuangan_pribadi/model/pengeluaran.dart';
 
 class PengeluaranDao {
   Future<int> insert(PengeluaranModel data) async {

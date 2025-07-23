@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/utils/format.dart';
-import 'package:mobile_asisten_keuangan/presenter/overview.dart';
+import 'package:keuangan_pribadi/utils/format.dart';
+import 'package:keuangan_pribadi/presenter/overview.dart';
 
 class OverviewView extends StatefulWidget {
   const OverviewView({super.key});

@@ -1,4 +1,4 @@
-# mobile_asisten_keuangan
+# keuangan_pribadi
 
 A new Flutter project.
 

@@ -43,6 +43,7 @@ dependencies:
   permission_handler: ^11.0.1
   flutter_native_splash: ^2.4.4
   flutter_launcher_icons: ^0.14.4
+  open_filex: ^4.7.0
 
 dev_dependencies:
   flutter_test:

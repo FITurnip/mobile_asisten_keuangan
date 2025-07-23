@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:keuangan_pribadi/view/pengeluaran_harian.dart';
 import 'package:keuangan_pribadi/view/saldo.dart';
 import 'package:keuangan_pribadi/view/overview.dart';
+
 import 'package:flutter/foundation.dart';
+
 import 'package:keuangan_pribadi/data/saldo_dao.dart';
+import 'package:keuangan_pribadi/view/backup.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _resetSaldoHarianJikaPerlu();
@@ -152,6 +158,7 @@ class _MainLayoutState extends State<MainLayout> {
     PengeluaranHarianView(),
     SaldoView(),
     OverviewView(),
+    BackupView(),
   ];
 
   void _onSelectMenu(int index) {
@@ -201,6 +208,12 @@ class _MainLayoutState extends State<MainLayout> {
               title: const Text('Overview'),
               selected: selectedMenuIndex == 2,
               onTap: () => _onSelectMenu(2),
+            ),
+            ListTile(
+              leading: const Icon(Icons.backup),
+              title: const Text('Backup'),
+              selected: selectedMenuIndex == 3,
+              onTap: () => _onSelectMenu(3),
             ),
             const Divider(),
             ListTile(

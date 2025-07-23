@@ -1,7 +1,7 @@
 import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
+import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
 import 'package:mobile_asisten_keuangan/model/saldo.dart';
 import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
-import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
 
 abstract class PengeluaranViewContract {
   void refresh();
@@ -9,16 +9,14 @@ abstract class PengeluaranViewContract {
 }
 
 class PengeluaranPresenter {
-  final PengeluaranDao pengeluaranDao;
-  final SaldoDao saldoDao;
+  late PengeluaranDao pengeluaranDao;
+  late SaldoDao saldoDao;
   final PengeluaranViewContract view;
 
   List<PengeluaranModel> pengeluaranList = [];
   SaldoModel? _saldoModel;
 
   PengeluaranPresenter({
-    required this.pengeluaranDao,
-    required this.saldoDao,
     required this.view,
   });
 
@@ -28,6 +26,9 @@ class PengeluaranPresenter {
       pengeluaranList.fold(0, (sum, item) => sum + item.pengeluaran);
 
   Future<void> init(String namaSaldo) async {
+    pengeluaranDao = PengeluaranDao();
+    saldoDao = SaldoDao();
+
     _saldoModel = await saldoDao.getSaldoByNama(namaSaldo);
     if (_saldoModel == null) {
       _saldoModel = SaldoModel(nama: namaSaldo, saldo: 0);

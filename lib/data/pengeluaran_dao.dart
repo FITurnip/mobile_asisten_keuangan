@@ -84,14 +84,16 @@ class PengeluaranDao {
     final db = await AppDatabase.getDatabase();
 
     final now = DateTime.now();
-    final int weekday = now.weekday;
-    final DateTime monday = now.subtract(Duration(days: weekday - 1));
-    final String fromDate = DateTime(monday.year, monday.month, monday.day).toIso8601String();
+    final toDate = DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1)); // Kemarin
+    final fromDate = toDate.subtract(const Duration(days: 6)); // 7 hari total
+
+    final String fromIso = fromDate.toIso8601String();
+    final String toIso = DateTime(toDate.year, toDate.month, toDate.day, 23, 59, 59).toIso8601String();
 
     final result = await db.query(
       'pengeluaran',
-      where: 'timestamp >= ?',
-      whereArgs: [fromDate],
+      where: 'timestamp BETWEEN ? AND ?',
+      whereArgs: [fromIso, toIso],
       orderBy: 'timestamp DESC',
     );
 
@@ -102,16 +104,20 @@ class PengeluaranDao {
     final db = await AppDatabase.getDatabase();
 
     final now = DateTime.now();
-    final String fromDate = DateTime(now.year, now.month, 1).toIso8601String();
+    final thisMonth = DateTime(now.year, now.month, 1);
+    final fromDate = DateTime(thisMonth.year, thisMonth.month - 1, 1);
+    final toDate = thisMonth.subtract(const Duration(seconds: 1)); // Akhir bulan lalu
+
+    final String fromIso = fromDate.toIso8601String();
+    final String toIso = DateTime(toDate.year, toDate.month, toDate.day, 23, 59, 59).toIso8601String();
 
     final result = await db.query(
       'pengeluaran',
-      where: 'timestamp >= ?',
-      whereArgs: [fromDate],
+      where: 'timestamp BETWEEN ? AND ?',
+      whereArgs: [fromIso, toIso],
       orderBy: 'timestamp DESC',
     );
 
     return result.map((map) => PengeluaranModel.fromMap(map)).toList();
   }
 }
-

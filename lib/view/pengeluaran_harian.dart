@@ -4,8 +4,6 @@ import 'package:mobile_asisten_keuangan/presenter/pengeluaran.dart';
 import 'package:mobile_asisten_keuangan/view/components/saldo.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mobile_asisten_keuangan/utils/format.dart';
-import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
-import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 
 class PengeluaranHarianView extends StatefulWidget {
   const PengeluaranHarianView({super.key});
@@ -23,8 +21,6 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView>
   void initState() {
     super.initState();
     presenter = PengeluaranPresenter(
-      pengeluaranDao: PengeluaranDao(),
-      saldoDao: SaldoDao(),
       view: this,
     );
     presenter.init("harian"); // Nama saldo bisa disesuaikan

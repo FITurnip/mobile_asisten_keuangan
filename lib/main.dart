@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_asisten_keuangan/view/saldo.dart';
 import 'package:mobile_asisten_keuangan/view/pengeluaran_harian.dart';
+import 'package:mobile_asisten_keuangan/view/saldo.dart';
+import 'package:mobile_asisten_keuangan/view/overview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -150,6 +151,7 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> menus = [
     PengeluaranHarianView(),
     SaldoView(),
+    OverviewView(),
   ];
 
   void _onSelectMenu(int index) {
@@ -193,6 +195,12 @@ class _MainLayoutState extends State<MainLayout> {
               title: const Text('Saldo'),
               selected: selectedMenuIndex == 1,
               onTap: () => _onSelectMenu(1),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard),
+              title: const Text('Overview'),
+              selected: selectedMenuIndex == 1,
+              onTap: () => _onSelectMenu(2),
             ),
             const Divider(),
             ListTile(

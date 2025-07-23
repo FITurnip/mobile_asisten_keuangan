@@ -36,6 +36,12 @@ class _OverviewViewState extends State<OverviewView> implements OverviewViewCont
     presenter.init();
   }
 
+  @override
+  void showAnnouncement(bool Success, String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(Success ? 'Berhasil diunduh' : 'Error: $error')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +63,12 @@ class _OverviewViewState extends State<OverviewView> implements OverviewViewCont
               selected: selectedMode == 'bulan',
               onSelected: (_) => _changeMode('bulan'),
             ),
+            const Spacer(),
+
+            IconButton(
+              icon: const Icon(Icons.download_rounded),
+              onPressed: () => presenter.downloadAllData()
+            )
           ]
         ),
         SizedBox(height: 16),

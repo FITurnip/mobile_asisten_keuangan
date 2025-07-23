@@ -8,15 +8,15 @@ class PengeluaranDao {
     return await db.insert('pengeluaran', data.toMap());
   }
 
-  Future<List<PengeluaranModel>> getAll() async {
+  Future<dynamic> getAll({bool asMap = false}) async {
     final db = await AppDatabase.getDatabase();
     final result = await db.query(
       'pengeluaran',
       orderBy: 'timestamp DESC',
     );
 
-    print(result);
-    return result.map((map) => PengeluaranModel.fromMap(map)).toList();
+    if(asMap) return result;
+    else return result.map((map) => PengeluaranModel.fromMap(map)).toList();
   }
 
   Future<void> deleteById(int id) async {

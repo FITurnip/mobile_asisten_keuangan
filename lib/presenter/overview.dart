@@ -1,9 +1,12 @@
 import 'package:mobile_asisten_keuangan/model/pengeluaran.dart';
 import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
+import 'package:mobile_asisten_keuangan/utils/file.dart';
 
 abstract class OverviewViewContract {
   void updateItemList(List<Map<String, dynamic>> newList);
   String selectedMode = "";
+
+  void showAnnouncement(bool success, String error);
 }
 
 class OverviewPresenter {
@@ -64,5 +67,11 @@ class OverviewPresenter {
       }
       view.updateItemList(resultBulananList);
     }
+  }
+
+  void downloadAllData() async {
+    final pengeluaranList = await pengeluaranDao.getAll(asMap: true);
+    final result = await exportToExcelFlexible(data: pengeluaranList);
+    view.showAnnouncement(result.success, result.error ?? '');
   }
 }

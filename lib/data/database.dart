@@ -32,7 +32,17 @@ class AppDatabase {
       )
     ''');
 
-    // Contoh data awal (opsional)
+    await db.execute('''
+      CREATE TABLE pengeluaran (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        deskripsi TEXT NOT NULL,
+        pengeluaran INTEGER NOT NULL,
+        saldo_sblm INTEGER NOT NULL,
+        timestamp TEXT NOT NULL
+      )
+    ''');
+
+    // Data awal
     await db.insert('saldo', {'nama': 'total', 'saldo': 10000000});
     await db.insert('saldo', {'nama': 'harian', 'saldo': 100000});
   }

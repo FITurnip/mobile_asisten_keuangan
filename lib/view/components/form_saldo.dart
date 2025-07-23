@@ -22,8 +22,8 @@ class _FormSaldoComponentState extends State<FormSaldoComponent>
   void initState() {
     super.initState();
     AppDatabase.getDatabase().then((db) {
-      final dao = SaldoDao(db);         // ← DAO dibuat di sini
-      _presenter = SaldoPresenter(this, dao); // ← Diberikan ke presenter
+      final dao = SaldoDao();
+      _presenter = SaldoPresenter(this, dao);
       _presenter.init();
     });
   }

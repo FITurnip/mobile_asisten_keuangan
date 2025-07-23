@@ -4,6 +4,8 @@ import 'package:mobile_asisten_keuangan/presenter/pengeluaran.dart';
 import 'package:mobile_asisten_keuangan/view/components/saldo.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mobile_asisten_keuangan/utils/format.dart';
+import 'package:mobile_asisten_keuangan/data/pengeluaran_dao.dart';
+import 'package:mobile_asisten_keuangan/data/saldo_dao.dart';
 
 class PengeluaranHarianView extends StatefulWidget {
   const PengeluaranHarianView({super.key});
@@ -12,15 +14,35 @@ class PengeluaranHarianView extends StatefulWidget {
   State<PengeluaranHarianView> createState() => _PengeluaranHarianViewState();
 }
 
-class _PengeluaranHarianViewState extends State<PengeluaranHarianView> {
+class _PengeluaranHarianViewState extends State<PengeluaranHarianView>
+    implements PengeluaranViewContract {
   final _formKey = GlobalKey<FormState>();
-  final PengeluaranPresenter presenter = PengeluaranPresenter();
+  late PengeluaranPresenter presenter;
+
+  @override
+  void initState() {
+    super.initState();
+    presenter = PengeluaranPresenter(
+      pengeluaranDao: PengeluaranDao(),
+      saldoDao: SaldoDao(),
+      view: this,
+    );
+    presenter.init("harian"); // Nama saldo bisa disesuaikan
+  }
+
+  @override
+  void refresh() => setState(() {});
+
+  @override
+  void showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
 
   void showPengeluaranModal(BuildContext context, int saldoSaatIni) {
     final deskripsiController = TextEditingController();
     final jumlahController = TextEditingController(text: "10000");
-    final saldoAkhirController = TextEditingController(
-        text: (saldoSaatIni - 10000).toString());
+    final saldoAkhirController =
+        TextEditingController(text: (saldoSaatIni - 10000).toString());
 
     showModalBottomSheet(
       context: context,
@@ -101,14 +123,13 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              presenter.tambahPengeluaran(
+                              await presenter.tambahPengeluaran(
                                 deskripsiController.text.trim(),
                                 int.parse(jumlahController.text),
                               );
                               Navigator.pop(context);
-                              setState(() {}); // Refresh UI
                             }
                           },
                           child: const Text('Simpan'),
@@ -125,9 +146,8 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView> {
     );
   }
 
-  void hapusPengeluaran(int index) {
-    presenter.hapusPengeluaran(index);
-    setState(() {});
+  void hapusPengeluaran(int index) async {
+    await presenter.hapusPengeluaran(index);
   }
 
   @override
@@ -213,3 +233,4 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView> {
     );
   }
 }
+

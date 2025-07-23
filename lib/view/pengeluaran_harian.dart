@@ -23,7 +23,7 @@ class _PengeluaranHarianViewState extends State<PengeluaranHarianView>
     presenter = PengeluaranPresenter(
       view: this,
     );
-    presenter.init("harian"); // Nama saldo bisa disesuaikan
+    presenter.init();
   }
 
   @override

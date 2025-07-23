@@ -14,35 +14,30 @@ class PengeluaranPresenter {
   final PengeluaranViewContract view;
 
   List<PengeluaranModel> pengeluaranList = [];
-  SaldoModel? _saldoModel;
+  SaldoModel? _saldoHarian, _saldoTotal;
 
   PengeluaranPresenter({
     required this.view,
   });
 
-  int get saldoTerkini => _saldoModel?.saldo ?? 0;
+  int get saldoTerkini => _saldoHarian?.saldo ?? 0;
 
   int get totalPengeluaran =>
       pengeluaranList.fold(0, (sum, item) => sum + item.pengeluaran);
 
-  Future<void> init(String namaSaldo) async {
+  Future<void> init() async {
     pengeluaranDao = PengeluaranDao();
     saldoDao = SaldoDao();
 
-    _saldoModel = await saldoDao.getSaldoByNama(namaSaldo);
-    if (_saldoModel == null) {
-      _saldoModel = SaldoModel(nama: namaSaldo, saldo: 0);
-      _saldoModel!.id = await saldoDao.insertSaldo(_saldoModel!);
-    }
-
+    _saldoHarian = await saldoDao.getSaldoByNama("harian");
+    _saldoTotal = await saldoDao.getSaldoByNama("total");
+    
     pengeluaranList = await pengeluaranDao.getAll();
     view.refresh();
   }
 
   Future<void> tambahPengeluaran(String deskripsi, int jumlah) async {
-    if (_saldoModel == null) return;
-
-    if (_saldoModel!.saldo < jumlah) {
+    if (_saldoHarian!.saldo < jumlah) {
       view.showError("Saldo tidak mencukupi");
       return;
     }
@@ -50,29 +45,35 @@ class PengeluaranPresenter {
     final data = PengeluaranModel(
       deskripsi: deskripsi,
       pengeluaran: jumlah,
-      saldoSebelumnya: _saldoModel!.saldo,
+      saldoSebelumnya: _saldoHarian!.saldo,
     );
 
     await pengeluaranDao.insert(data);
     pengeluaranList.insert(0, data);
 
-    _saldoModel!.kurangi(jumlah);
-    await saldoDao.updateSaldo(_saldoModel!);
+    _saldoHarian!.kurangi(jumlah);
+    await saldoDao.updateSaldo(_saldoHarian!);
+
+    _saldoTotal!.kurangi(jumlah);
+    await saldoDao.updateSaldo(_saldoTotal!);
 
     view.refresh();
   }
 
   Future<void> hapusPengeluaran(int index) async {
-    if (_saldoModel == null || index < 0 || index >= pengeluaranList.length) return;
+    if (_saldoHarian == null || _saldoTotal == null || index < 0 || index >= pengeluaranList.length) return;
 
     final data = pengeluaranList.removeAt(index);
     await pengeluaranDao.deleteById(data.id!);
 
-    _saldoModel!.tambah(data.pengeluaran);
-    await saldoDao.updateSaldo(_saldoModel!);
+    _saldoHarian!.tambah(data.pengeluaran);
+    await saldoDao.updateSaldo(_saldoHarian!);
+
+    _saldoTotal!.tambah(data.pengeluaran);
+    await saldoDao.updateSaldo(_saldoTotal!);
 
     // hitung ulang saldo_sebelumnya untuk data yang tersisa
-    int saldoTemp = _saldoModel!.saldo;
+    int saldoTemp = _saldoHarian!.saldo;
     for (var item in pengeluaranList) {
       item.saldoSebelumnya = saldoTemp;
       saldoTemp -= item.pengeluaran;
